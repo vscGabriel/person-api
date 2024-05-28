@@ -3,6 +3,7 @@ package com.vscgabriel.application.service;
 import com.vscgabriel.application.dto.UserDTO;
 import com.vscgabriel.domain.models.User;
 import com.vscgabriel.domain.repository.UserRepository;
+import com.vscgabriel.utils.PasswordEncryptionUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -16,12 +17,14 @@ public class UserAppServiceImpl implements UserAppService{
     @Override
     @Transactional
     public UserDTO createUser(UserDTO userDTO) {
+        String encryptedPassword = PasswordEncryptionUtils.encryptPassword(userDTO.getPassword());
+
         User user =  new User();
 
         user.setName(userDTO.getName());
         user.setCpf(userDTO.getCpf());
         user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(encryptedPassword);
 
         userRepository.save(user);
 
@@ -52,6 +55,18 @@ public class UserAppServiceImpl implements UserAppService{
     }
 
     @Override
+    public UserDTO getByCpf(String cpf) {
+        User user = userRepository.findByCpf(cpf);
+        return  convertToDTO(user);
+    }
+
+    @Override
+    public UserDTO getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return convertToDTO(user);
+    }
+
+    @Override
     @Transactional
     public void deletePerson(Long id) {
         User user = userRepository.findById(id);
@@ -68,6 +83,7 @@ public class UserAppServiceImpl implements UserAppService{
             userDTO.setCpf(user.getCpf());
             userDTO.setEmail(user.getEmail());
             userDTO.setPassword(user.getPassword());
+            userDTO.setRole(user.getRole());
 
             return userDTO;
         }

@@ -31,6 +31,17 @@ public class User {
             message = "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character")
     private String password;
 
+    @Column(nullable = false,length = 50)
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,5 +1,6 @@
 package com.vscgabriel.domain.repository;
 
+import com.vscgabriel.application.dto.UserDTO;
 import com.vscgabriel.domain.models.User;
 
 public interface UserRepository {
@@ -9,4 +10,5 @@ public interface UserRepository {
     void save(User user);
     User update(User user);
     void delete(Long id);
+    User findByCpf(String cpf);
 }

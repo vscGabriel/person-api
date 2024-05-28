@@ -19,6 +19,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findByCpf(String cpf) {
+        return userRepository.findByCpf(cpf);
+    }
+
+    @Override
     @Transactional
     public void createUser(User user) {
         userRepository.save(user);

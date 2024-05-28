@@ -18,6 +18,16 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
+    @Override
+    public User findByCpf(String cpf) {
+        return repository.findByCpf(cpf);
+    }
+
+    @Override
     @Transactional
     public void createUser(User userReq) {
         User user = new User();
